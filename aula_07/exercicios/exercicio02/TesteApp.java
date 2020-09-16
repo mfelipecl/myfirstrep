@@ -1,6 +1,6 @@
 package exercicio02;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TesteApp {
@@ -11,12 +11,13 @@ public class TesteApp {
         int numeroConta;
         double limite;
         double valor;
-        
-        ArrayList<Conta> listaDeContas = new ArrayList<>();
 
-        ContaCorrente cc;
+        GerenciaContas contas = new GerenciaContas();
+        // ArrayList<Conta> listaDeContas = new ArrayList<>();
+
+        /*ContaCorrente cc;
         ContaEspecial ce;
-        ContaPoupanca cp;
+        ContaPoupanca cp;*/
 
         ContaPoupanca.setTaxa(0.10);
 
@@ -36,8 +37,10 @@ public class TesteApp {
                     System.out.println("Criando uma conta corrente.");
                     System.out.println("Informe o número da conta:");
                     numeroConta = teclado.nextInt();
-                    cc = new ContaCorrente(numeroConta);
-                    listaDeContas.add(cc);
+                    /*
+                     * cc = new ContaCorrente(numeroConta); listaDeContas.add(cc);
+                     */
+                    contas.novaContaCorrente(numeroConta);
                     break;
                 case 2:
                     System.out.println("Criando uma conta especial.");
@@ -45,36 +48,41 @@ public class TesteApp {
                     numeroConta = teclado.nextInt();
                     System.out.println("Informe o limite:");
                     limite = teclado.nextDouble();
-                    ce = new ContaEspecial(numeroConta, limite);
-                    listaDeContas.add(ce);
+                    //ce = new ContaEspecial(numeroConta, limite);
+                    contas.novaContaEspecial(numeroConta, limite);
                     break;
                 case 3:
                     System.out.println("Criando uma conta poupança.");
                     System.out.println("Informe o número da conta:");
                     numeroConta = teclado.nextInt();
-                    cp = new ContaPoupanca(numeroConta);
-                    listaDeContas.add(cp);
+                    //cp = new ContaPoupanca(numeroConta);
+                    contas.novaContaPoupanca(numeroConta);
+                    
                     break;
                 case 4:
                     System.out.println("Informe o número da conta:");
                     numeroConta = teclado.nextInt();
                     System.out.println("Informe o valor do depósito");
                     valor = teclado.nextDouble();
-                    for(Conta conta : listaDeContas){
-                        if(conta.getNumero() == numeroConta){
-                        conta.depositar(valor);
-                        break; //interrompe o laço for quando achou a conta
-                        }
+                    if(contas.depositar(numeroConta, valor)){
+                        System.out.println("Deposito realizado");
+                    }else{
+                        System.out.println("Falha na operação");
                     }
                     break;
                 case 5:
-
-                    break;
-                case 6:
-                    for(int i =0; i < listaDeContas.size(); i++){
-                        System.out.println(listaDeContas.get(i).exibir());
+                    System.out.println("Informe o número da conta:");
+                    numeroConta = teclado.nextInt();
+                    System.out.println("Informe o valor do saque");
+                    valor = teclado.nextDouble();
+                    if(contas.sacar(numeroConta, valor)){
+                        System.out.println("Saque realizado");
+                    }else{
+                        System.out.println("Falha na operação");
                     }
                     break;
+                case 6:
+                    System.out.println(contas.listarContas());
                 case 7:
                     break;
                 default:
